@@ -7,8 +7,10 @@
 
 using namespace std;
 
-double Module(double r, double i);
-double Arg(double r, double i);
+double ModuleS(double r, double x);
+double ModuleP(double r, double x);
+double ArgS(double r,double i);
+double ArgP(double r,double i);
 
 void Frequence(double *f, int *n);
 void SaisirValeur(double *valeur);
@@ -31,18 +33,31 @@ int main() {
 
 }
 
-double Module(double r, double i)
+double ModuleS(double r, double x)
 {
-	double module = sqrt(r*r + i * i);
-	return module;
+        double module=sqrt(r*r+x*x);
+        return module;
+}
+double ModuleP(double r, double x)
+{
+    double module=sqrt(pow(r*x*x/(r*r+x*x),2)+pow(r*r*x/(r*r+x*x),2));
+    return module;
 }
 
-double Arg(double r, double i)
+double ArgS(double r, double i)
 {
-	double arg;
-	if (r == 0) arg = 90;
-	else arg = atan2(i,r) * 180 / M_PI;
-	return arg;
+    double arg;
+    if (r==0) arg = 90;
+    else arg= atan2(i,r)*180/M_PI;
+    return arg;
+}
+
+double ArgP(double r, double i)
+{
+    double arg;
+    if (r==0) arg = 90;
+    else arg= atan2(r,i)*180/M_PI;
+    return arg;
 }
 
 void Frequence(double *f, int *n)
@@ -94,8 +109,8 @@ void RCserie()
 			a[i] = (int)(fmin + i * (f - fmin) / n);
 			cout << "Frequence " << i + 1 << " : " << a[i] << endl;
 			// Calcul du module et d'arg
-			module[i] = Module(R, 1 / (2 * M_PI*a[i] * C));
-			arg[i] = Arg(R, 1 / (2 * M_PI*a[i] * C));
+			module[i] = ModuleS(R, 1 / (2 * M_PI*a[i] * C));
+			arg[i] = ArgS(R, 1 / (2 * M_PI*a[i] * C));
 			cout << "Module ";
 			Affichage(module[i]);
 			cout << "Argument ";
